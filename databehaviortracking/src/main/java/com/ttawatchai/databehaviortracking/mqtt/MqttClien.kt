@@ -3,13 +3,13 @@ package com.ttawatchai.databehaviortracking.mqtt
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
-import com.ttawatchai.databehaviortracking.model.MqttResponse
+import com.ttawatchai.databehaviortracking.model.MqttConfig
 import io.nlopez.smartlocation.SmartLocation
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 import java.util.*
 
-class MqttClien(private val context: Context, config: MqttResponse) {
+class MqttClien(private val context: Context, config: MqttConfig) {
 
     private
     lateinit var client: MqttAndroidClient
@@ -23,7 +23,7 @@ class MqttClien(private val context: Context, config: MqttResponse) {
 //    }
 
     private fun connect(
-        data: MqttResponse,
+        data: MqttConfig,
         topics: Array<String>? = null,
         messageCallBack: ((topic: String, message: MqttMessage) -> Unit)? = null
     ) {
@@ -73,7 +73,7 @@ class MqttClien(private val context: Context, config: MqttResponse) {
         Log.d(TAG, "[LOG:] addToHistory: $mainText")
     }
 
-    fun publishMessage(data: MqttResponse, steam: String): Boolean {
+    fun publishMessage(data: MqttConfig, steam: String): Boolean {
         try {
             if (SmartLocation.with(context).location().state().locationServicesEnabled()) {
                 if (client.isConnected)
@@ -133,7 +133,7 @@ class MqttClien(private val context: Context, config: MqttResponse) {
         return String.format(Locale.US, urlFormat, url, port.toInt())
     }
 
-    fun setClien(data: MqttResponse): Boolean {
+    fun setClien(data: MqttConfig): Boolean {
         val gson = Gson()
         try {
             if (data.updateDate.isNotEmpty()) {

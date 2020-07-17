@@ -1,6 +1,6 @@
 package com.ttawatchai.databehaviortracking.model
 
-data class MqttResponse(
+data class MqttConfig(
     val url: String,
     val port: String,
     val portSSL: String,

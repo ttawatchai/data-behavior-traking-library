@@ -41,7 +41,7 @@ class DataBehabviorTracking private constructor(var context: Context) : DataBeha
             .start(smartLocationCallback)
     }
 
-    override fun setConfigMqtt(data: MqttResponse) {
+    override fun setConfigMqtt(data: MqttConfig) {
         mqttDatabehavior.value = data
         mqttClien = MqttClien(context, data)
         mqttClien!!.setClien(data)
@@ -50,12 +50,16 @@ class DataBehabviorTracking private constructor(var context: Context) : DataBeha
         )
     }
 
-    override fun sendData(data: String) {
-        TODO("Not yet implemented")
+    override fun getLastLocation(): Location? {
+        return getLocation()
     }
 
     override fun sendDataWithInfo(data: GetDataTrackInfoResponse) {
         mqttInfo.value = data
+    }
+
+    override fun senDataInfo(data: TrackInfo) {
+        mqttDataInfo.value = data
     }
 
     override fun getDataInfo(acc: String) {
@@ -68,11 +72,42 @@ class DataBehabviorTracking private constructor(var context: Context) : DataBeha
                 .isNotEmpty()
         ) {
             val gson = Gson()
-            if (mqttClien == null || mqttInfo.value==null) {
+            if (mqttClien == null || mqttInfo.value == null) {
 //                handleMqttConfig()
-            } else if (isDataBehavior && mqttInfo.value != null) {
-//                val data = gson.fromJson(mqttInfo.value!!.trackInfo, GetDataTrackInfoResponse::class.java)
-//                Log.d(TAG + "istrack", isDataBehavior.toString())
+            }else if (isDataBehavior && mqttDataInfo.value != null) {
+                val detail = mqttDataInfo.value!!
+                if (detail != null) {
+                    val publisData = MqttData(
+                        detail!!.carId,
+                        UtillManager.stringIsNotNull(lastLocation.value?.location?.latitude.toString()),
+                        UtillManager.stringIsNotNull(lastLocation.value?.location?.longitude.toString()),
+                        detail.carPlate,
+                        detail.driverName,
+                        detail.policyNo,
+                        detail.companyName,
+                        detail.companyId,
+                        UtillManager.mps_to_kmph(UtillManager.doubleIsNotNull(lastSpeed.value?.speed))
+                            .toString(),
+                        System.currentTimeMillis().toString(),
+                        "IDLE",
+                        detail.streamId,
+                        "0",
+                        detail.driverId,
+                        InfoBehaviorData("", "", ""),
+                        UtillManager.stringIsNotNull(lastLocation.value?.location?.accuracy.toString()),
+                        "accId.value!!",
+                        "false"
+                    )
+                    val jsonString = Gson().toJson(publisData)
+                    if (mqttDatabehavior.value != null) {
+                        mqttClien!!.publishMessage(mqttDatabehavior.value!!, jsonString)
+                    } else {
+//                        handleMqttConfig()
+                    }
+                }
+
+            }
+            else if (isDataBehavior && mqttInfo.value != null) {
                 val detail = mqttInfo.value!!.trackInfo
                 if (detail != null) {
                     val publisData = MqttData(
@@ -105,7 +140,6 @@ class DataBehabviorTracking private constructor(var context: Context) : DataBeha
                 }
 
             } else if (!isDataBehavior) {
-//                Log.d(TAG + "istrack", isDataBehavior.toString())
                 val publisData =
                     MqttModel(
                         lastLocation.value!!.location.latitude.toString(),
@@ -134,8 +168,9 @@ class DataBehabviorTracking private constructor(var context: Context) : DataBeha
         val lastTime = MutableLiveData<String>()
         val accId = MutableLiveData<String>()
         val mqttInfo = MutableLiveData<GetDataTrackInfoResponse>()
-        val mqttDatabehavior = MutableLiveData<MqttResponse>()
-        val mqttOld = MutableLiveData<MqttResponse>()
+        val mqttDataInfo = MutableLiveData<TrackInfo>()
+        val mqttDatabehavior = MutableLiveData<MqttConfig>()
+        val mqttOld = MutableLiveData<MqttConfig>()
 
 
         fun getInstance(context: Context): DataBehabviorTracking {

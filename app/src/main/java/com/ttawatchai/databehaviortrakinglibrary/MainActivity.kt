@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ttawatchai.databehaviortracking.DataBehabviorTracking
-import com.ttawatchai.databehaviortracking.model.MqttResponse
+import com.ttawatchai.databehaviortracking.model.MqttConfig
 import com.ttawatchai.networklibrary.model.Status
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val mqttDatabehavior = MutableLiveData<MqttResponse>()
+        val mqttDatabehavior = MutableLiveData<MqttConfig>()
         private const val LOG_TAG: String = "test_lib"
         private const val API_KEY: String = "sendDi"
         const val API_DOMAIN: String = "http://dev-api-sentdi.claimdi.com"

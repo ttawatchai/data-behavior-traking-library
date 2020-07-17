@@ -28,16 +28,16 @@ For starting the location service:
 
 - implement to youre service
 
-	````Kotlin
-		// 1sec == 1000
-		var interval = 1000
-		tracking!!.startTracking(interval)
-	````
+````Kotlin
+	// 1sec == 1000
+	var interval = 1000
+	tracking!!.startTracking(interval)
+````
 
 If you just want to get a single location (not periodic) you can just use the oneFix modifier. Example:
 
 ````Kotlin
-        tracking.getLastLocation()
+	tracking.getLastLocation()
 ````
 
 ## Start sent DataBehavior to Mqtt
@@ -47,8 +47,8 @@ If you just want to get a single location (not periodic) you can just use the on
 Step 1. create mqtt data
 
 ````Kotlin
-            var config =  MqttConfig("url","port","portSSL","portWs","username","password","isactive","createBy","createDate","updateBy","updateDate","topic","id")
-            tracking.setConfigMqtt(config)
+	var config =  MqttConfig("url","port","portSSL","portWs","username","password","isactive","createBy","createDate","updateBy","updateDate","topic","id")
+	tracking.setConfigMqtt(config)
 ````
     
 *see logcat tag " MQTT " if show"  [CON] Connected to: $serverURI " is success to connect mqtt

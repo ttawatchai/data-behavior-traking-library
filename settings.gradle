@@ -1,0 +1,3 @@
+include ':databehaviortracking'
+include ':app'
+rootProject.name = "DataBehaviorTrakingLibrary"

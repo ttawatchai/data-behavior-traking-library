@@ -10,6 +10,6 @@ interface DataBehabviorInterface {
     fun setConfigMqtt(data: MqttConfig)
     fun getLastLocation() : Location?
     fun sendDataWithInfo(data: GetDataTrackInfoResponse)
-    fun senDataInfo(data: TrackInfo)
+    fun sendDataInfo(data: TrackInfo)
     fun getDataInfo(acc: String)
 }

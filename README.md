@@ -16,11 +16,12 @@ Step 2. You should add this to your root build.gradle at the end of repositories
 
 	        implementation 'com.github.ttawatchai:data-behavior-traking-library:Tag'
 
-##Library
+## Library
 
 For starting the library service:
-''Kotlin
+````Kotlin
         var tracking = DataBehabviorTracking.getInstance(this)
+````
 ## Location
 ### Starting
 

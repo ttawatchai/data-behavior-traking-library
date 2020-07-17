@@ -1,12 +1,13 @@
 Adding to your project
 ----------------------
 Step 1. You should add this to your dependencies:
+	````
             allprojects {
                     repositories {
                         maven { url 'https://jitpack.io' }
                     }
                 }
-
+	````
 Step 2. You should add this to your root build.gradle at the end of repositories:
 
 	        implementation 'com.github.ttawatchai:data-behavior-traking-library:Tag'
@@ -20,12 +21,12 @@ For starting the library service:
 ### Starting
 
 For starting the location service:
-
-````Kotlin
-        // 1sec == 1000
-        var interval = 1000
-        tracking!!.startTracking(interval)
-````
+- implement to youre service
+	````Kotlin
+		// 1sec == 1000
+		var interval = 1000
+		tracking!!.startTracking(interval)
+	````
 
 If you just want to get a single location (not periodic) you can just use the oneFix modifier. Example:
 

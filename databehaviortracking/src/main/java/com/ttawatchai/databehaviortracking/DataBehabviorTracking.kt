@@ -58,7 +58,7 @@ class DataBehabviorTracking private constructor(var context: Context) : DataBeha
         mqttInfo.value = data
     }
 
-    override fun senDataInfo(data: TrackInfo) {
+    override fun sendDataInfo(data: TrackInfo) {
         mqttDataInfo.value = data
     }
 

@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        dataRepository.getDataTrackInfo("782d593c-d6bb-4e7e-ba04-30fdc743ae44").observeForever {
+        dataRepository.getDataTrackInfo("acc_id").observeForever {
             if (it.status == Status.SUCCESS) {
                 Log.d(LOG_TAG, it.message.toString())
                 tracking!!.sendDataWithInfo(it.data!!)
@@ -78,10 +78,10 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val mqttDatabehavior = MutableLiveData<MqttConfig>()
         private const val LOG_TAG: String = "test_lib"
-        private const val API_KEY: String = "sendDi"
-        const val API_DOMAIN: String = "http://dev-api-sentdi.claimdi.com"
-        const val API_ROOT: String = "/api/car/mqtt/active"
-        const val API_ROOT1: String = "/api/Track/GetDataTrackInfo"
+        private const val API_KEY: String = ""
+        const val API_DOMAIN: String = ""
+        const val API_ROOT: String = ""
+        const val API_ROOT1: String = ""
         var info: String = ""
 
     }
